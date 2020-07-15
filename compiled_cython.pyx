@@ -10,6 +10,9 @@ from typing import Union
 
 from PIL import Image
 from luckydonaldUtils.logger import logging
+from libc.stdint cimport uint32_t
+
+from .pure_python import RGB, Sums, Luma
 
 __author__ = 'luckydonald'
 
@@ -19,25 +22,27 @@ if __name__ == '__main__':
     logging.add_colored_handler(level=logging.DEBUG)
 # end if
 
-from .pure_python import RGB, Sums, Luma
 
+cdef rgb_sums(Image.Image img: Image.Image, log_prefix = "") -> Sums:
+    cdef uint32_t width, height
 
-def rgb_sums(img: Image.Image, log_prefix = "") -> Sums:
     width, height = img.size
     pixels = list(img.getdata())
     sums = Sums()
+
     for i in range(height):
         if i % 10 == 0:
             logger.debug(f'{log_prefix}Processing line {i} of {width}x{height} px image.')
         # end if
         for j in range(width):
-            nw = (i <= height / 2) and (j <= width / 2)
+            cdef int nw = (i <= height / 2) and (j <= width / 2)
             # noinspection PyShadowingNames
-            ne = (i <= height / 2) and (j >= width / 2)
+            cdef int ne = (i <= height / 2) and (j >= width / 2)
             # noinspection PyShadowingNames
-            sw = (i >= height / 2) and (j <= width / 2)
+            cdef int sw = (i >= height / 2) and (j <= width / 2)
             # noinspection PyShadowingNames
-            se = (i >= height / 2) and (j >= width / 2)
+            cdef int se = (i >= height / 2) and (j >= width / 2)
+
             img.load()
             pixel = pixels[i * width + j]
             r, g, b = pixel[0], pixel[1], pixel[2]
@@ -72,7 +77,7 @@ def rgb_sums(img: Image.Image, log_prefix = "") -> Sums:
 
 
 # noinspection PyShadowingBuiltins
-def calculate_luma(dim: int, sum: RGB):
+def calculate_luma(double dim: int, sum: RGB):
     return (
        (sum.r / dim * 0.2126) +
        (sum.g / dim * 0.7152) +
@@ -81,10 +86,11 @@ def calculate_luma(dim: int, sum: RGB):
 # end def
 
 
-def sums_to_luma(sums: Sums, img: Image.Image) -> Luma:
+cdef sums_to_luma(sums: Sums, img: Image.Image) -> Luma:
+    cdef uint32_t width, height
     width, height = img.size
 
-    dim = max(width * height / 4.0, 1)
+    cdef double dim = max(width * height / 4.0, 1)
 
     return Luma(
         nw=calculate_luma(dim, sums.nw),
