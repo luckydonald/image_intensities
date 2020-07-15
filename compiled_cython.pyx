@@ -104,3 +104,11 @@ cpdef Luma sums_to_luma(sums: Sums, img: Image.Image):
         se=_calculate_luma(dim, sums.se),
     )
 # end def
+
+
+def rgb_luma_from_filename(filename: str) -> Luma:
+    from PIL.Image import open
+    img = open(filename)
+    result = rgb_sums(img)
+    return sums_to_luma(result, img)
+# end def

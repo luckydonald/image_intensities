@@ -17,3 +17,15 @@ except ImportError:
     from .pure_python import rgb_sums, sums_to_luma
 # except
 
+try:
+    from .compiled_cffi import jpeg_intensities, png_intensities, rgb_luma_from_filename
+except ImportError:
+    try:
+        from .compiled_cython import rgb_luma_from_filename
+    except ImportError:
+        from .pure_python import rgb_luma_from_filename
+    # except
+# end try
+
+
+
