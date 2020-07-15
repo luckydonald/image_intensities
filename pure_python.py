@@ -104,9 +104,12 @@ def rgb_sums(img: Image.Image, log_prefix = "") -> Sums:
     width, height = img.size
     pixels = list(img.getdata())
     sums = Sums()
+    log_counter = -1  # more efficient then i % 10 == 0
     for i in range(height):
-        if i % 10 == 0:
+        log_counter += 1
+        if log_counter == 10:
             logger.debug(f'{log_prefix}Processing line {i} of {width}x{height} px image.')
+            log_counter = 0
         # end if
         for j in range(width):
             nw = (i <= height / 2) and (j <= width / 2)
