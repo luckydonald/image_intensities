@@ -79,7 +79,7 @@ cpdef Sums rgb_sums(img: Image.Image, log_prefix = ""):
 
 
 # noinspection PyShadowingBuiltins
-cpdef double calculate_luma(double dim, sum: RGB):
+cdef double _calculate_luma(double dim, sum: RGB):
     return (
        (sum.r / dim * 0.2126) +
        (sum.g / dim * 0.7152) +
@@ -95,9 +95,9 @@ cpdef Luma sums_to_luma(sums: Sums, img: Image.Image):
     cdef double dim = max(width * height / 4.0, 1)
 
     return Luma(
-        nw=calculate_luma(dim, sums.nw),
-        ne=calculate_luma(dim, sums.ne),
-        sw=calculate_luma(dim, sums.sw),
-        se=calculate_luma(dim, sums.se),
+        nw=_calculate_luma(dim, sums.nw),
+        ne=_calculate_luma(dim, sums.ne),
+        sw=_calculate_luma(dim, sums.sw),
+        se=_calculate_luma(dim, sums.se),
     )
 # end def
