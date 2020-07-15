@@ -19,7 +19,7 @@ if __name__ == '__main__':
     logging.add_colored_handler(level=logging.DEBUG)
 # end if
 
-from .intensities import RGB, Sums, Luma
+from .pure_python import RGB, Sums, Luma
 
 
 def rgb_sums(img: Image.Image, log_prefix = "") -> Sums:
