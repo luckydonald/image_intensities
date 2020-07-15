@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 if __name__ == '__main__':
     logging.add_colored_handler(level=logging.DEBUG)
 # end if
+logger.debug('loaded Cython version.')
 
 
 cdef rgb_sums(Image.Image img: Image.Image, log_prefix = "") -> Sums:
