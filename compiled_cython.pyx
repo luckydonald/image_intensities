@@ -12,7 +12,7 @@ from PIL import Image
 from luckydonaldUtils.logger import logging
 from libc.stdint cimport uint32_t
 
-from .pure_python import RGB, Sums, Luma
+from .pure_python cimport RGB, Sums, Luma
 
 __author__ = 'luckydonald'
 
@@ -24,25 +24,26 @@ if __name__ == '__main__':
 logger.debug('loaded Cython version.')
 
 
-cdef rgb_sums(Image.Image img: Image.Image, log_prefix = "") -> Sums:
-    cdef uint32_t width, height
+cpdef Sums rgb_sums(img: Image.Image, log_prefix = ""):
+    cdef uint32_t width, height, i, j
 
     width, height = img.size
     pixels = list(img.getdata())
     sums = Sums()
 
+    cdef int nw, ne, sw, se
     for i in range(height):
         if i % 10 == 0:
             logger.debug(f'{log_prefix}Processing line {i} of {width}x{height} px image.')
         # end if
         for j in range(width):
-            cdef int nw = (i <= height / 2) and (j <= width / 2)
+            nw = (i <= height / 2) and (j <= width / 2)
             # noinspection PyShadowingNames
-            cdef int ne = (i <= height / 2) and (j >= width / 2)
+            ne = (i <= height / 2) and (j >= width / 2)
             # noinspection PyShadowingNames
-            cdef int sw = (i >= height / 2) and (j <= width / 2)
+            sw = (i >= height / 2) and (j <= width / 2)
             # noinspection PyShadowingNames
-            cdef int se = (i >= height / 2) and (j >= width / 2)
+            se = (i >= height / 2) and (j >= width / 2)
 
             img.load()
             pixel = pixels[i * width + j]
@@ -78,7 +79,7 @@ cdef rgb_sums(Image.Image img: Image.Image, log_prefix = "") -> Sums:
 
 
 # noinspection PyShadowingBuiltins
-def calculate_luma(double dim: int, sum: RGB):
+cpdef double calculate_luma(double dim, sum: RGB):
     return (
        (sum.r / dim * 0.2126) +
        (sum.g / dim * 0.7152) +
@@ -87,7 +88,7 @@ def calculate_luma(double dim: int, sum: RGB):
 # end def
 
 
-cdef sums_to_luma(sums: Sums, img: Image.Image) -> Luma:
+cpdef Luma sums_to_luma(sums: Sums, img: Image.Image):
     cdef uint32_t width, height
     width, height = img.size
 
