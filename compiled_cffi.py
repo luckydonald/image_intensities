@@ -30,7 +30,11 @@ ffi.cdef("""
     struct intensity_data jpeg_intensities(const char *file_name);
     struct intensity_data png_intensities(const char *file_name);
 """)
-lib = ffi.dlopen(so_file)
+try:
+    lib = ffi.dlopen(so_file)
+except OSError as e:
+    raise ImportError('OSError: ' + str(e))
+# end if
 
 
 def jpeg_intensities(filename):
