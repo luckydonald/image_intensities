@@ -16,7 +16,7 @@ from cffi import FFI
 from os import path
 from .pure_python import Luma
 
-so_file = path.abspath(__file__ + "/../../../ext/image_intensities/lib/libimage_intensities.so")
+so_file = path.abspath(__file__ + "/../image_intensities/lib/libimage_intensities.so")
 ffi = FFI()
 ffi.cdef("""
     extern struct intensity_data {
