@@ -1,8 +1,8 @@
 MY_VAR := ${shell python -c 'from image_intensities import VERSION as v; print(v)'}
 
 clean:
-	rm -rf *.so *.egg-info build *.png *.log *.svg
-	rm -f compiled_cython.c pure_python.c
+	rm --verbose -rf **/*.so **/*.egg-info build **/*.png **/*.log **/*.svg
+	rm --verbose -rf image_intensities/compiled_cython.{c,*.so} image_intensities/pure_python.{c,*.so} image_intensities/image_intensities/lib
 
 upload: clean
 	python setup.py sdist
