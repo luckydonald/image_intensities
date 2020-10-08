@@ -100,7 +100,7 @@ class Luma(object):
 # end class
 
 
-def rgb_sums(img: Image.Image, log_prefix = "") -> Sums:
+def rgb_sums(img: Image.Image, log_prefix="") -> Sums:
     width, height = img.size
     pixels = list(img.getdata())
     sums = Sums()
