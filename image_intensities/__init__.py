@@ -9,8 +9,7 @@ if __name__ == '__main__':
     logging.add_colored_handler(level=logging.DEBUG)
 # end if
 
-__version__ = '0.0.1'
-VERSION = __version__
+from .version import __version__, VERSION
 
 from .pure_python import RGB, Luma, Sums
 

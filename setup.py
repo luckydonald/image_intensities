@@ -6,7 +6,7 @@ from platform import platform
 
 from setuptools import setup, find_packages  # Always prefer setuptools over distutils
 from os import path
-from image_intensities import VERSION
+from image_intensities.version import VERSION
 __author__ = 'luckydonald'
 
 here = path.abspath(path.dirname(__file__))
