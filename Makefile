@@ -1,4 +1,4 @@
-MY_VAR := ${shell python -c 'from image_intensities import VERSION as v; print(v)'}
+MY_VAR := ${shell python -c 'from image_intensities.version import VERSION as v; print(v)'}
 
 clean:
 	rm --verbose -rf **/*.so **/*.egg-info build **/*.png **/*.log **/*.svg
@@ -10,4 +10,4 @@ upload: clean
 	twine upload dist/image_intensities-${MY_VAR}.tar.gz
 
 install:
-	cd image_intensities && make
+	cd image_intensities/image_intensities && make
