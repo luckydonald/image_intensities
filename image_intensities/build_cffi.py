@@ -10,7 +10,7 @@ ffibuilder = cffi.FFI()
 ffibuilder.set_source(
     module_name="image_intensities._foo",
     source="""
-    #include "intensity_data_struct.h"
+    #include "definitions.h"
     #include "turbojpeg.h"
     """,
     #define_macros=[("HAVE_UNSIGNED_CHAR", "1")],
