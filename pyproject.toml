@@ -1,0 +1,5 @@
+# https://snarky.ca/what-the-heck-is-pyproject-toml/
+[build-system]
+requires = ["setuptools", "wheel", "Cython"]
+build-backend = "setuptools.build_meta"
+
