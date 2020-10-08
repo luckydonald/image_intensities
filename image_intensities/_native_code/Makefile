@@ -79,5 +79,5 @@ turbojpeg/%.o: turbojpeg/%.c
 	$(CC) $< -c -o $@ -fPIC -shared -O3 -DPPM_SUPPORTED -DBMP_SUPPORTED -Iturbojpeg
 
 clean:
-	$(RM) -rf $(JPEG_OBJECTS)
+	$(RM) -rf $(JPEG_OBJECTS) {jpeg,png,intensities}.o
 	$(RM) -rf lib
