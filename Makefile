@@ -8,3 +8,6 @@ upload: clean
 	python setup.py sdist
 	@echo UPLOADING VERSION $(MY_VAR)
 	twine upload dist/image_intensities-${MY_VAR}.tar.gz
+
+install:
+	cd image_intensities && make
