@@ -20,13 +20,17 @@ except ImportError:
 # except
 
 try:
-    from .compiled_cffi import jpeg_intensities, png_intensities, rgb_luma_from_filename
+    from .native_cffi import jpeg_intensities, png_intensities, rgb_luma_from_filename
 except ImportError:
     try:
-        from .compiled_cython import rgb_luma_from_filename
+        from .compiled_cffi import jpeg_intensities, png_intensities, rgb_luma_from_filename
     except ImportError:
-        from .pure_python import rgb_luma_from_filename
-    # except
+        try:
+            from .compiled_cython import rgb_luma_from_filename
+        except ImportError:
+            from .pure_python import rgb_luma_from_filename
+        # end try
+    # end try
 # end try
 
 
