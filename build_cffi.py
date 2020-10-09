@@ -8,16 +8,18 @@ import cffi
 
 ffibuilder = cffi.FFI()
 ffibuilder.set_source(
-    module_name="_image_intensities",
+    module_name="image_intensities._native_code._image_intensities",
     source="""
     #include "definitions.h"
     #include "turbojpeg.h"
     """,
     include_dirs=[  # -I
         "turbojpeg",
+        "main"
     ],
     libraries=[  # -L
-        "jpeg", "png",
+        "jpeg",
+        "png",
     ],
     sources=[
          "turbojpeg/jsimd_none.c",
@@ -80,13 +82,15 @@ ffibuilder.set_source(
          "turbojpeg/rdppm.c",
          "turbojpeg/wrbmp.c",
          "turbojpeg/wrppm.c",
-         "intensities.c", "png.c", "jpeg.c",
+
+         "main/intensities.c",
+         "main/png.c",
+         "main/jpeg.c",
      ],
     extra_compile_args=[
         "-std=c99",
         "-fPIC",
         "-O3",
-        "-shared",
         "-DPPM_SUPPORTED",
         "-DBMP_SUPPORTED",
     ],

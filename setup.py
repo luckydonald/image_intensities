@@ -18,8 +18,6 @@ from setuptools import setup
 from Cython.Build import cythonize
 
 from image_intensities.version import VERSION
-# noinspection PyProtectedMember
-from image_intensities._native_code import build_cffi
 
 
 setup(
@@ -27,14 +25,13 @@ setup(
     description='Calculate image intensities, a database friendly alternative to image hashing..',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    ext_modules=[
-        build_cffi.ffibuilder.distutils_extension()
-    ] + cythonize(
+    ext_modules=cythonize(
         [
             "image_intensities/compiled_cython.pyx",
             "image_intensities/pure_python.py",
         ]
     ),
+    cffi_modules=["build_cffi.py:ffibuilder"],
     # The project's main homepage.
     url='https://github.com/luckydonald/image_intensities',
     # Author details
