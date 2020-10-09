@@ -17,7 +17,7 @@ from Cython.Build import cythonize
 with open('image_intensities/version.py') as f:
     version_file = f.read()
 # end with
-m = re.search(r"""^__version__\s*=\s*(['"])(?P<version>.+?)\1\s*$""", version_file, flags=re.MULTILINE)
+m = re.search(r"""^__version__\s*=\s*(['"])(?P<version>.+?)\1""", version_file, flags=re.MULTILINE)
 version = m.group('version')
 
 setup(
