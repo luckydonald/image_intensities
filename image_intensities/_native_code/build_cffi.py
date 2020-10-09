@@ -8,17 +8,16 @@ import cffi
 
 ffibuilder = cffi.FFI()
 ffibuilder.set_source(
-    module_name="_native",
+    module_name="_image_intensities",
     source="""
     #include "definitions.h"
     #include "turbojpeg.h"
     """,
-    #define_macros=[("HAVE_UNSIGNED_CHAR", "1")],
     include_dirs=[  # -I
         "turbojpeg",
     ],
     libraries=[  # -L
-        "jpeg", "png", #"intensities"
+        "jpeg", "png",
     ],
     sources=[
          "turbojpeg/jsimd_none.c",
@@ -101,7 +100,7 @@ ffibuilder.cdef("""
         int error;
     };
 
-    struct intensity_data jpeg_intensities(const char *file_name);
+    struct intensity_data lib_jpeg_intensities(const char *file_name);
     struct intensity_data png_intensities(const char *file_name);
 """)
 
