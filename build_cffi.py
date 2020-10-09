@@ -83,9 +83,9 @@ ffibuilder.set_source(
          "./image_intensities/_native_code/turbojpeg/wrbmp.c",
          "./image_intensities/_native_code/turbojpeg/wrppm.c",
 
-         "./image_intensities/_native_code/main/intensities.c",
-         "./image_intensities/_native_code/main/png.c",
-         "./image_intensities/_native_code/main/jpeg.c",
+         "./image_intensities/_native_code/intensities.c",
+         "./image_intensities/_native_code/png.c",
+         "./image_intensities/_native_code/jpeg.c",
      ],
     extra_compile_args=[
         "-std=c99",
