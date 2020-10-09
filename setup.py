@@ -15,56 +15,8 @@ with open('README.md') as f:
     long_description = f.read()
 # end if
 
-
 from setuptools import setup
 from Cython.Build import cythonize
-from distutils.command.build import build
-
-
-class MakefileBuild(build):
-    def run(self):
-        # run original build code
-        build.run(self)
-
-        # build XCSoar
-        build_path = os.path.abspath(self.build_temp)
-
-        cmd = [
-            'make',
-        ]
-
-        try:
-            cmd.append('-j%d' % os.cpu_count())
-        except NotImplementedError:
-            print('Unable to determine number of CPUs. Using single threaded make.')
-        # end if
-
-        options = [
-            'DEBUG=n',
-        ]
-        cmd.extend(options)
-
-        targets = ['python']
-        cmd.extend(targets)
-
-        if platform() == 'darwin':
-            target_path = 'OSX64_PYTHON'
-        else:
-            target_path = 'UNIX_PYTHON'
-
-        # target_files = [os.path.join(build_path, target_path, 'bin', 'xcsoar.so')]
-
-        def compile():
-            subprocess.call(cmd)
-
-        self.execute(compile, [], 'Compiling image_intensities')
-
-        # copy resulting tool to library build folder
-        # self.mkpath(self.build_lib)
-
-        # if not self.dry_run:
-        #     for target in target_files:
-        #         self.copy_file(target, self.build_lib)
 
 setup(
     name='image_intensities', version=VERSION,
