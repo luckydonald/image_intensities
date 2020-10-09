@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from mimetypes import guess_type
+from cffi import FFI
 from luckydonaldUtils.logger import logging
 
 __author__ = 'luckydonald'
@@ -14,7 +14,6 @@ from pathlib import Path
 from .pure_python import Luma
 from .shared_cffi import lib_jpeg_intensities, lib_rgb_luma_from_filename
 from .shared_cffi import lib_png_intensities
-from ._native_code.build_cffi import ffibuilder as ffi
 
 so_files = Path(__file__).joinpath('..', '_native_code').absolute().glob("_image_intensities{,.*}.so")
 try:
@@ -23,6 +22,19 @@ except StopIteration:
     logger.warning('Loading optimized library via CFFI failed, file not found.')
     raise ImportError('File not found.')
 # end if
+ffi = FFI()
+ffi.cdef("""
+    extern struct intensity_data {
+        double nw;
+        double ne;
+        double sw;
+        double se;
+        int error;
+    } intensity_data;
+
+    struct intensity_data jpeg_intensities(const char *file_name);
+    struct intensity_data png_intensities(const char *file_name);
+""")
 try:
     lib = ffi.dlopen(so_file)
 except OSError as e:
