@@ -6,7 +6,6 @@ from platform import platform
 
 from setuptools import setup, find_packages  # Always prefer setuptools over distutils
 from os import path
-from image_intensities.version import VERSION
 __author__ = 'luckydonald'
 
 here = path.abspath(path.dirname(__file__))
@@ -18,12 +17,24 @@ with open('README.md') as f:
 from setuptools import setup
 from Cython.Build import cythonize
 
+from image_intensities.version import VERSION
+# noinspection PyProtectedMember
+from image_intensities._native_code import build_cffi
+
+
 setup(
     name='image_intensities', version=VERSION,
     description='Calculate image intensities, a database friendly alternative to image hashing..',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    ext_modules = cythonize(["image_intensities/compiled_cython.pyx", "image_intensities/pure_python.py", ]),
+    ext_modules=[
+        build_cffi.ffibuilder.distutils_extension()
+    ] + cythonize(
+        [
+            "image_intensities/compiled_cython.pyx",
+            "image_intensities/pure_python.py",
+        ]
+    ),
     # The project's main homepage.
     url='https://github.com/luckydonald/image_intensities',
     # Author details
