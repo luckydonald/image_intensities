@@ -79,9 +79,12 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
+        "cffi>=1.0.0",
         "luckydonald-utils>=0.73",  # general utils
         # "pytgbot>=4.1.1",  # telegram communication
-    ]
+    ],
+    # https://cffi.readthedocs.io/en/latest/cdef.html
+    setup_requires=["cffi>=1.0.0"],
     # List additional groups of dependencies here (e.g. development dependencies).
     # You can install these using the following syntax, for example:
     # $ pip install -e .[dev,test]
