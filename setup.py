@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import os
-import subprocess
-from platform import platform
-
-from setuptools import setup, find_packages  # Always prefer setuptools over distutils
+import re
 from os import path
 __author__ = 'luckydonald'
 
@@ -12,16 +8,20 @@ here = path.abspath(path.dirname(__file__))
 
 with open('README.md') as f:
     long_description = f.read()
-# end if
+# end with
 
 from setuptools import setup
 from Cython.Build import cythonize
 
-from image_intensities.version import VERSION
-
+# Replacement of `from image_intensities.version import VERSION`.
+with open('image_intensities/version.py') as f:
+    version_file = f.read()
+# end with
+m = re.match("""__version__\s*=\s*(['"])(?P<version>.+?)\1""")
+version = m.group('version')
 
 setup(
-    name='image_intensities', version=VERSION,
+    name='image_intensities', version=version,
     description='Calculate image intensities, a database friendly alternative to image hashing..',
     long_description=long_description,
     long_description_content_type='text/markdown',
