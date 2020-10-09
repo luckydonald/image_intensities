@@ -104,7 +104,7 @@ ffibuilder.cdef("""
         int error;
     };
 
-    struct intensity_data lib_jpeg_intensities(const char *file_name);
+    struct intensity_data jpeg_intensities(const char *file_name);
     struct intensity_data png_intensities(const char *file_name);
 """)
 
