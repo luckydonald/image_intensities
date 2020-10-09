@@ -23,11 +23,7 @@ setup(
     description='Calculate image intensities, a database friendly alternative to image hashing..',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    ext_modules=cythonize(["image_intensities/compiled_cython.pyx", "image_intensities/pure_python.py", ]),
-    cmdclass={
-        'build': MakefileBuild,
-        # 'install': MakefileInstall,
-    },
+    ext_modules = cythonize(["image_intensities/compiled_cython.pyx", "image_intensities/pure_python.py", ]),
     # The project's main homepage.
     url='https://github.com/luckydonald/image_intensities',
     # Author details
