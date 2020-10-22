@@ -15,7 +15,7 @@ from .pure_python import Luma
 from .shared_cffi import lib_jpeg_intensities, lib_rgb_luma_from_filename
 from .shared_cffi import lib_png_intensities
 
-so_files = Path(__file__).joinpath('..', '_native_code').absolute().glob("_image_intensities{,.*}.so")
+so_files = Path(__file__).joinpath('..', '_native_code').absolute().glob("_image_intensities*.so")
 try:
     so_file = str(next(so_files))
 except StopIteration:
